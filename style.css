@@ -1,0 +1,377 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background-color: #e0e0e0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 15px;
+}
+
+.main-container {
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+/* CARDS E TELAS */
+.screen-card {
+  background-color: #f0f0f0;
+  border: 4px ridge #ccc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.screen-card h2 {
+  color: #1b5e20;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+/* FORMULÁRIO E TABELA */
+.form-box, .list-box {
+  background: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 15px;
+}
+
+.form-box h3, .list-box h3 {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+}
+
+.table-container {
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 300px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+  font-size: 13px;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr.selected {
+  background-color: #d1e7dd;
+}
+
+/* BOTOES DA TELA DE CADASTRO */
+.action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.btn-add { background-color: #2e7d32; }
+.btn-remove { background-color: #c62828; }
+.btn-excel { background-color: #00695c; }
+.btn-start { background-color: #1565c0; }
+
+/* URNA ELETRÔNICA CONTAINER */
+.urna-wrapper {
+  background-color: #d6d6d6;
+  border: 5px outset #eeeeee;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+/* VISOR DA URNA */
+.urna-display {
+  flex: 1 1 300px;
+  max-width: 480px;
+  width: 100%;
+  background-color: #f5f5dc;
+  border: 4px inset #bbbbbb;
+  border-radius: 6px;
+  padding: 15px;
+  position: relative;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.display-header h4 { font-size: 11px; color: #555; }
+.display-header h5 { font-size: 10px; color: #000; margin-top: 6px; }
+.display-header h3 { font-size: 18px; color: #000; margin-bottom: 15px; }
+
+.digit-box-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.digit-box {
+  width: 42px;
+  height: 52px;
+  border: 2px solid #000;
+  background-color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.info-line {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.alert-message {
+  font-size: 16px;
+  font-weight: bold;
+  color: red;
+  margin-top: 10px;
+  min-height: 40px;
+  white-space: pre-line;
+}
+
+.display-footer {
+  margin-top: auto;
+  border-top: 2px solid #888;
+  padding-top: 8px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.screen-fim {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #f5f5dc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 65px;
+  font-weight: bold;
+  color: #000;
+  z-index: 10;
+}
+
+/* TECLADO DA URNA */
+.urna-keypad {
+  width: 100%;
+  max-width: 260px;
+  background-color: #222222;
+  border: 5px outset #444444;
+  border-radius: 8px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.keypad-header {
+  color: #dcdcdc;
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.numeric-keys {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.key-btn {
+  width: 100%;
+  height: 45px;
+  background-color: #111111;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  border: 3px raised #333;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.key-btn:active {
+  background-color: #444444;
+}
+
+.action-keys {
+  display: flex;
+  width: 100%;
+  gap: 5px;
+}
+
+.act-btn {
+  flex: 1;
+  padding: 10px 2px;
+  font-size: 9px;
+  font-weight: bold;
+  border: 2px raised #333;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn-branco-act { background-color: #ffffff; color: #000; }
+.btn-corrige-act { background-color: #e65100; color: #fff; }
+.btn-confirma-act { background-color: #1b5e20; color: #fff; padding: 14px 2px; }
+
+/* MESARIO & CRÉDITO */
+.mesario-bar {
+  margin-top: 15px;
+  width: 100%;
+  text-align: center;
+}
+
+.btn-mesario {
+  background-color: #666;
+  font-size: 12px;
+  padding: 8px 16px;
+}
+
+/* MODAIS */
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 15px;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  font-size: 16px;
+  text-align: center;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* AJUSTES PARA SMARTPHONES E TELAS PEQUENAS (MOBILE) */
+@media (max-width: 600px) {
+  body {
+    padding: 5px;
+  }
+
+  .screen-card, .urna-wrapper {
+    padding: 10px;
+  }
+
+  .action-bar {
+    flex-direction: column;
+  }
+
+  .action-bar .btn {
+    width: 100%;
+  }
+
+  .urna-display {
+    min-height: 360px;
+    padding: 10px;
+  }
+
+  .display-header h3 {
+    font-size: 16px;
+  }
+
+  .digit-box {
+    width: 36px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .screen-fim {
+    font-size: 48px;
+  }
+
+  .key-btn {
+    height: 42px;
+    font-size: 16px;
+  }
+
+  .act-btn {
+    font-size: 8px;
+    padding: 8px 1px;
+  }
+
+  .btn-confirma-act {
+    padding: 12px 1px;
+  }
+}

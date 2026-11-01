@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Urna Eletrónica - Grêmio Estudantil</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ÁUDIO DO CONFIRMA -->
+  <audio id="somConfirma" src="som_confirma-urna.mp3" preload="auto"></audio>
+
+  <div class="main-container">
+
+    <!-- TELA 1: CADASTRO DE CHAPAS -->
+    <div id="telaCadastro" class="screen-card">
+      <h2>🏫 CADASTRO DE CHAPAS - GRÊMIO ESTUDANTIL</h2>
+
+      <div class="form-box">
+        <h3>Inserir Nova Chapa</h3>
+        <div class="form-group">
+          <label for="numChapa">Número (2 dígitos):</label>
+          <input type="text" id="numChapa" maxlength="2" placeholder="Ex: 11">
+        </div>
+        <div class="form-group">
+          <label for="nomeChapa">Nome da Chapa:</label>
+          <input type="text" id="nomeChapa" placeholder="Ex: Chapa 1 - Renovação">
+        </div>
+        <div class="form-group">
+          <label for="liderChapa">Líder / Presidente:</label>
+          <input type="text" id="liderChapa" placeholder="Ex: Lucas Silva (3º A)">
+        </div>
+        <button class="btn btn-add" onclick="adicionarChapa()">➕ Adicionar Chapa</button>
+      </div>
+
+      <div class="list-box">
+        <h3>Chapas Cadastradas</h3>
+        <div class="table-container">
+          <table id="tabelaChapas">
+            <thead>
+              <tr>
+                <th>Nº</th>
+                <th>Nome da Chapa</th>
+                <th>Líder / Presidente</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Preenchido via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="action-bar">
+        <button class="btn btn-remove" onclick="removerChapa()">🗑️ Remover Selecionada</button>
+        <button class="btn btn-excel" onclick="exportarExcel()">📊 Exportar para Excel (.csv)</button>
+        <button class="btn btn-start" onclick="iniciarVotacao()">🗳️ INICIAR VOTAÇÃO URNA</button>
+      </div>
+
+      <!-- CRÉDITO NO RODAPÉ DO CARD -->
+      <div style="text-align: center; margin-top: 15px; font-size: 11px; color: #777; font-weight: bold;">
+        @inacio.top TI
+      </div>
+    </div>
+
+    <!-- TELA 2: URNA ELETRÓNICA -->
+    <div id="telaUrna" class="urna-wrapper hidden" style="flex-direction: column; align-items: center;">
+      
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; width: 100%; justify-content: center;">
+        <!-- VISOR DA URNA -->
+        <div class="urna-display">
+          <div class="display-header">
+            <h4>JUSTIÇA ELEITORAL</h4>
+            <h5>SEU VOTO VAI PARA</h5>
+            <h3>GRÊMIO ESTUDANTIL</h3>
+          </div>
+
+          <div class="digit-box-container">
+            <span>Número:</span>
+            <div class="digit-box" id="digito1"></div>
+            <div class="digit-box" id="digito2"></div>
+          </div>
+
+          <div class="info-line">
+            <strong>Nome:</strong> <span id="nomeChapaVisor"></span>
+          </div>
+          <div class="info-line">
+            <strong>Líder:</strong> <span id="liderChapaVisor"></span>
+          </div>
+
+          <div class="alert-message" id="mensagemAlerta"></div>
+
+          <div class="display-footer">
+            <p>Aperte a tecla:</p>
+            <p><strong>CONFIRMA</strong> para CONFIRMAR este voto</p>
+            <p><strong>CORRIGE</strong> para REINICIAR este voto</p>
+          </div>
+
+          <!-- TELA DE FIM -->
+          <div id="ecraFim" class="screen-fim hidden">FIM</div>
+        </div>
+
+        <!-- TECLADO DA URNA -->
+        <div class="urna-keypad">
+          <div class="keypad-header">JUSTIÇA ELEITORAL</div>
+
+          <div class="numeric-keys">
+            <button class="key-btn" onclick="pressionarNumero('1')">1</button>
+            <button class="key-btn" onclick="pressionarNumero('2')">2</button>
+            <button class="key-btn" onclick="pressionarNumero('3')">3</button>
+            <button class="key-btn" onclick="pressionarNumero('4')">4</button>
+            <button class="key-btn" onclick="pressionarNumero('5')">5</button>
+            <button class="key-btn" onclick="pressionarNumero('6')">6</button>
+            <button class="key-btn" onclick="pressionarNumero('7')">7</button>
+            <button class="key-btn" onclick="pressionarNumero('8')">8</button>
+            <button class="key-btn" onclick="pressionarNumero('9')">9</button>
+            <div style="grid-column: 2;">
+              <button class="key-btn" onclick="pressionarNumero('0')">0</button>
+            </div>
+          </div>
+
+          <div class="action-keys">
+            <button class="act-btn btn-branco-act" onclick="votarBranco()">BRANCO</button>
+            <button class="act-btn btn-corrige-act" onclick="corrigeVoto()">CORRIGE</button>
+            <button class="act-btn btn-confirma-act" onclick="confirmaVoto()">CONFIRMA</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL DO MESÁRIO E CRÉDITO EMBUTIDO LOGO ABAIXO -->
+      <div class="mesario-bar" style="text-align: center; margin-top: 15px; width: 100%;">
+        <button class="btn btn-mesario" onclick="abrirModalSenha()">⚙ Mesário / Apuração</button>
+        <div style="margin-top: 10px; font-size: 11px; color: #555; font-weight: bold;">
+          @inacio.top TI
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- MODAL: SENHA DO MESÁRIO -->
+  <div id="modalSenha" class="modal hidden">
+    <div class="modal-content">
+      <h3>Acesso do Mesário</h3>
+      <p>Digite a senha do mesário:</p>
+      <input type="password" id="inputSenhaMesario" placeholder="****">
+      <div class="modal-actions">
+        <button class="btn btn-add" onclick="verificarSenhaMesario()">Acessar</button>
+        <button class="btn btn-remove" onclick="fecharModalSenha()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: OPÇÕES DO MESÁRIO -->
+  <div id="modalOpcoesMesario" class="modal hidden">
+    <div class="modal-content">
+      <h3>PAINEL DO MESÁRIO</h3>
+      <br>
+      <button class="btn btn-add" style="width: 100%; margin-bottom: 10px;" onclick="verApuracaoVotos()">📊 Ver Apuração dos Votos</button>
+      <button class="btn btn-start" style="width: 100%; background-color: #d84315;" onclick="voltarAoCadastro()">⚙ Voltar ao Cadastro de Chapas</button>
+      <br><br>
+      <button class="btn btn-remove" onclick="fecharModalOpcoes()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- MODAL: APURAÇÃO DOS VOTOS -->
+  <div id="modalApuracao" class="modal hidden">
+    <div class="modal-content">
+      <h3>JUSTIÇA ELEITORAL</h3>
+      <h4 style="color: #1b5e20;">APURAÇÃO DOS VOTOS</h4>
+      <br>
+      <div id="conteudoApuracao"></div>
+      <br>
+      <button class="btn btn-start" onclick="fecharModalApuracao()">Fechar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
